@@ -31,4 +31,10 @@ class Booking extends Model
     {
         return $this->hasOne(Review::class);
     }
+
+    //racunanje ukupne cene rezervacije tako sto se mnozi cena karte i broj karata
+    public function getTotalPriceAttribute()
+    {
+        return $this->event->price * $this->number_of_tickets;
+    }
 }
