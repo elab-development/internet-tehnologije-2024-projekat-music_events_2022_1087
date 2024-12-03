@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BookingExport;
 use App\Http\Resources\BookingResource;
 use Illuminate\Http\Request;
 use App\Models\Booking;
@@ -93,6 +94,13 @@ class BookingController extends Controller
         ]);
     }
 
-    
+    public function export()
+    {
+        if (!auth()->user() || !auth()->user()->is_manager) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        // Generisanje excel fajla
+        return \Maatwebsite\Excel\Facades\Excel::download(new BookingExport, 'bookings.xlsx');
+    }
 
 }
