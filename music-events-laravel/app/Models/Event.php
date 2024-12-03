@@ -16,7 +16,8 @@ class Event extends Model
         'time',            
         'location',        
         'performer',       
-        'price',           
+        'price',  
+        'type',         
     ];
 
     public function bookings()
