@@ -46,8 +46,8 @@ class EventController extends Controller
         return new EventResource($event); 
     }
 
-    //azuriranje tipa dogadjaja - samo menadzer
-    public function updateType(Request $request, $id)
+    //azuriranje  dogadjaja - samo menadzer
+    public function update(Request $request, $id)
     {
         // Provera da li je korisnik menadžer
         if (!auth()->user() || !auth()->user()->is_manager) {
@@ -55,14 +55,20 @@ class EventController extends Controller
         }
 
         $validated = $request->validate([
+            'date' => 'required|date',
+            'time' => 'required',
+            'location' => 'required|string',
+            'performer' => 'required|string',
             'type' => 'required|string|in:concert,festival,opera,benefit concert',
         ]);
 
         $event = Event::findOrFail($id);
+        $event->update($validated);
 
-        $event->update(['type' => $validated['type']]);
-
-        return new EventResource($event); 
+        return response()->json([
+            'message' => 'Event updated successfully!',
+            'event' => new EventResource($event),
+        ]);
     }
 
    //brisanje dogadjaja - samo menadzer

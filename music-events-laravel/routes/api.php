@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
@@ -18,8 +20,12 @@ Route::get('/test', function () {
 Route::middleware('auth:sanctum')->group(function () {
    
     Route::post('/events', [EventController::class, 'store']);
-    Route::patch('/events/{id}/type', [EventController::class, 'updateType']);
+    Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
+
+    Route::resource('bookings', BookingController::class)->only(['index','store', 'update', 'destroy']);
+
+    Route::post('/bookings/{bookingId}/reviews', [ReviewController::class, 'store']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
