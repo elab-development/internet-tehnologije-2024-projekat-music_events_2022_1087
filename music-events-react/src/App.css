@@ -84,3 +84,84 @@ body {
 .image-container:hover img {
   filter: brightness(1.2);
 }
+
+/* Top Left Navigation (Vertical) */
+.side-nav {
+  position: fixed;
+  top: 20px; /* Moves it down slightly from the top */
+  left: 20px; /* Moves it slightly from the left */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Navigation Icons */
+.nav-icon {
+  font-size: 1.8rem; /* Ensure proper size */
+  color: black;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  padding: 12px;
+  border-radius: 50%;
+}
+
+/* Unique Hover Effect */
+.nav-icon:hover {
+  transform: scale(1.2) rotate(10deg);
+  filter: brightness(0.7);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Logo in Top Right Corner */
+.logo-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Set a fixed square size */
+  height: 60px;
+}
+
+/* Logo Image */
+.logo-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Lottie Animation Styling */
+.lottie-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  pointer-events: none; /* Ensure animation does not block hover */
+}
+
+/* Hide scrollbar but allow scrolling */
+body {
+  overflow: hidden; /* Completely disables scrolling */
+}
+
+/* OR, hide scrollbar but allow scrolling */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+body {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
