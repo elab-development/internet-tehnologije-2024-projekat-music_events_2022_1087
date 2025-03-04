@@ -7,12 +7,14 @@ import Events from "./components/Events";
 import EventInfo from "./components/EventInfo";
 import Footer from "./components/Footer";
 import SubscriptionPlan from "./components/SubscriptionPlan";
+import AdPopup from "./components/AdPopup";
 import "./App.css";
 
 const App = () => {
     return (
         <Router>
             <div className="app-container">
+            <AdPopup />
             <Navigation />
             <Logo />
                 <Routes>
