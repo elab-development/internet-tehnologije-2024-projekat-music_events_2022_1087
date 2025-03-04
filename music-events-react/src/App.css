@@ -534,3 +534,95 @@ body {
   opacity: 0.7;
 }
 
+/* Subscription Section */
+.subscription-container {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Title */
+.subscription-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: white;
+}
+
+/* Flexbox Layout for One Row */
+.subscription-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap; /* Ensures all cards stay in one row */
+  overflow-x: auto; /* Enables horizontal scrolling if needed */
+  padding-bottom: 10px;
+}
+
+/* Card Styling */
+.card-sub {
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  min-width: 250px; /* Ensure each card fits properly */
+  max-width: 280px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-sub:hover {
+  transform: scale(1.05);
+}
+
+/* Card Icon */
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: black;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Card Price */
+.card-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Features List */
+.card-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.card-features li {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/* Subscribe Button */
+.subscribe-btn {
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background: #444;
+}
