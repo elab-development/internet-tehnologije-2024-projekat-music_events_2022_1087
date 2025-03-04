@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTicketAlt, FaStar, FaCrown, FaGem } from "react-icons/fa";
-import CardSubPlans from "./CardSubPlans"; // Reusable Subscription Card Component
+import CardSubPlans from "./CardSubPlans"; 
 import "../App.css";
 
 const plans = [

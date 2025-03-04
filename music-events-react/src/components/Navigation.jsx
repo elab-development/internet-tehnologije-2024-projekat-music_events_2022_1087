@@ -1,8 +1,7 @@
-// src/components/Navigation.jsx
 import React from "react";
 import { FaHome, FaMusic, FaRegCreditCard } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
-import "../App.css"; // Ensure CSS is loaded
+import "../App.css"; 
 
 const Navigation = () => {
     return (

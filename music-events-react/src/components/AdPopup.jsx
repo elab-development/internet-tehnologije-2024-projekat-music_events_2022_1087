@@ -1,7 +1,6 @@
-// src/components/AdPopup.jsx
 import React, { useState } from "react";
 import useRandomAd from "../hooks/useRandomAd";
-import { AiOutlineClose } from "react-icons/ai"; // React Icons for Close Button
+import { AiOutlineClose } from "react-icons/ai"; 
 import "../App.css";
 
 const AdPopup = () => {

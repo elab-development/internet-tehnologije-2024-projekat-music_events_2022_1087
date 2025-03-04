@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useImages from "../hooks/useImages";
-import MapComponent from "../components/MapComponent"; // 🔥 Import the Map Component
+import MapComponent from "../components/MapComponent"; 
 import "../App.css";
 
 const EventInfo = () => {
@@ -41,7 +41,6 @@ const EventInfo = () => {
                 <p><strong>Type:</strong> {event.type}</p>
             </div>
 
-            {/* 🔥 Add Map Component Here - Passing Event Data */}
             <MapComponent
                 locationName={event.location}
                 eventTitle={event.title}
@@ -49,7 +48,6 @@ const EventInfo = () => {
                 price={event.price}
             />
 
-            {/* ✅ Buttons Section */}
             <div className="button-group">
                 <button className="book-now-btn" onClick={() => alert("Booking not implemented yet!")}>
                     Book Now

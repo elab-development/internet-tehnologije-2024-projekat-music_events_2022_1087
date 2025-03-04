@@ -1,4 +1,3 @@
-// src/pages/Events.jsx
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import "../App.css";
@@ -9,7 +8,7 @@ const Events = () => {
     const [typeFilter, setTypeFilter] = useState("");
     const [sortBy, setSortBy] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6; // Now displays in a 3x3 grid
+    const itemsPerPage = 6; 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -32,13 +31,11 @@ const Events = () => {
             });
     }, []);
 
-    // Filtering and sorting logic
     const filteredEvents = events
         .filter((event) => event.title.toLowerCase().includes(search.toLowerCase()))
         .filter((event) => (typeFilter ? event.type === typeFilter : true))
         .sort((a, b) => (sortBy === "asc" ? a.price - b.price : b.price - a.price));
 
-    // Pagination Logic
     const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
     const displayedEvents = filteredEvents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -69,7 +66,6 @@ const Events = () => {
                 ))}
             </div>
 
-            {/* Styled Pagination */}
             <div className="pagination-container">
                 <div className="pagination-box">
                     <button className="pagination-btn" onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>

@@ -1,3 +1,4 @@
+// Uvoz potrebnih hook-ova i biblioteka
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -6,7 +7,7 @@ import useImages from "../hooks/useImages";
 import "leaflet/dist/leaflet.css";
 import "../App.css";
 
-// 🔥 Predefined land-based locations for fallback
+// Lista unapred definisanih lokacija na kopnu za slučaj kada se ne pronađu koordinate
 const LAND_LOCATIONS = [
     { name: "New York, USA", lat: 40.7128, lon: -74.0060 },
     { name: "London, UK", lat: 51.5074, lon: -0.1278 },
@@ -18,74 +19,89 @@ const LAND_LOCATIONS = [
     { name: "Mumbai, India", lat: 19.0760, lon: 72.8777 },
 ];
 
+// Komponenta mape koja prima ime lokacije, naslov događaja, izvođača i cenu
 const MapComponent = ({ locationName, eventTitle, performer, price }) => {
+    // Stanje za koordinate koje će se koristiti za prikaz mape
     const [coordinates, setCoordinates] = useState(null);
-    const [isFallback, setIsFallback] = useState(false); // 🔥 Tracks if fallback is used
+    // Stanje koje označava da li se koristi fallback lokacija
+    const [isFallback, setIsFallback] = useState(false);
+    // Koristi useImages hook za preuzimanje slike povezane sa događajem (samo 1 slika)
     const { images, loading: imageLoading, error: imageError } = useImages(eventTitle, 1);
 
+    // useEffect za preuzimanje koordinata na osnovu imena lokacije
     useEffect(() => {
+        // Ako nije prosleđeno ime lokacije, ne radi ništa
         if (!locationName) return;
 
         const fetchCoordinates = async () => {
             try {
+                // Slanje zahteva Nominatim API-ju za geokodiranje imena lokacije
                 const response = await axios.get(
                     `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName)}`
                 );
 
+                // Ako su pronađene koordinate, postavi ih u stanje
                 if (response.data.length > 0) {
                     const { lat, lon } = response.data[0];
                     setCoordinates([parseFloat(lat), parseFloat(lon)]);
                     setIsFallback(false);
                 } else {
+                    // Ako nisu pronađene koordinate, ispiši upozorenje i koristi fallback lokaciju
                     console.warn(`No coordinates found for: ${locationName}. Using random land-based location.`);
-                    setFallbackLocation(); // 🔥 Use predefined land location only if failed
+                    setFallbackLocation();
                 }
             } catch (error) {
+                // U slučaju greške prilikom preuzimanja koordinata, ispiši grešku i koristi fallback
                 console.error("Error fetching location coordinates:", error);
-                setFallbackLocation(); // 🔥 Use fallback only if request fails
+                setFallbackLocation();
             }
         };
 
         fetchCoordinates();
     }, [locationName]);
 
-    // 🔥 Function to set a land-based fallback location
+    // Funkcija koja postavlja fallback lokaciju (nasumično odabranu iz LAND_LOCATIONS)
     const setFallbackLocation = () => {
         const randomLocation = LAND_LOCATIONS[Math.floor(Math.random() * LAND_LOCATIONS.length)];
         setCoordinates([randomLocation.lat, randomLocation.lon]);
         setIsFallback(true);
     };
 
-    // 🔥 Function to update map view dynamically
+    // Komponenta koja ažurira prikaz mape kada se koordinate promene
     const UpdateMapView = ({ coords }) => {
         const map = useMap();
         useEffect(() => {
             if (coords) {
+                // Postavlja centar mape i zoom nivo
                 map.setView(coords, 10);
             }
         }, [coords, map]);
         return null;
     };
 
-    // 🔥 Custom marker icon
+    // Definisanje prilagođene ikone markera
     const customIcon = new L.Icon({
-        iconUrl: "/assets/custom-marker.png",
+        iconUrl: "/assets/custom-marker.png", // Proveri da li fajl postoji u public/assets
         iconSize: [40, 40],
         iconAnchor: [20, 40],
-        popupAnchor: [15, 5], // Moves the popup **to the side**
+        popupAnchor: [15, 5], // Pomera popup na stranu umesto iznad markera
     });
 
     return (
         <div className="map-container">
             {coordinates ? (
                 <MapContainer center={coordinates} zoom={10} scrollWheelZoom={false} className="leaflet-map">
-                    <UpdateMapView coords={coordinates} /> {/* 🔥 Adjust zoom dynamically */}
+                    {/* Automatski ažuriraj prikaz mape kada se koordinate promene */}
+                    <UpdateMapView coords={coordinates} />
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
+                    {/* Prikaz markera sa prilagođenom ikonom */}
                     <Marker position={coordinates} icon={customIcon}>
                         <Popup className="custom-popup">
                             <div className="popup-container">
+                                {/* Prikaz slike preuzetih putem useImages hook-a */}
                                 {imageLoading ? (
                                     <p>Loading image...</p>
                                 ) : imageError || !images.length ? (
@@ -97,6 +113,7 @@ const MapComponent = ({ locationName, eventTitle, performer, price }) => {
                                         className="popup-image"
                                     />
                                 )}
+                                {/* Prikaz detalja događaja unutar popupa */}
                                 <h3 className="popup-title">{eventTitle}</h3>
                                 <p><strong>Performer:</strong> {performer}</p>
                                 <p><strong>Location:</strong> {isFallback ? "Random City" : locationName}</p>
@@ -106,6 +123,7 @@ const MapComponent = ({ locationName, eventTitle, performer, price }) => {
                     </Marker>
                 </MapContainer>
             ) : (
+                // Ako koordinate nisu učitane, prikazuje se poruka
                 <p className="loading-text">Loading map...</p>
             )}
         </div>

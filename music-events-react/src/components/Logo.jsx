@@ -1,7 +1,6 @@
-// src/components/Logo.jsx
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import "../App.css"; // Reuse global styles
+import { Link } from "react-router-dom"; 
+import "../App.css"; 
 
 const Logo = () => {
     return (

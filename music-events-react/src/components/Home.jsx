@@ -1,13 +1,10 @@
-// src/pages/Home.jsx
 import React, { useState } from "react";
 import useImages from "../hooks/useImages";
 import Lottie from "lottie-react";
 import "../App.css";
 
-// Import Lottie Animation
 import hoverAnimation from "../animations/notes-animation.json"; 
 
-// Define random sound files
 const soundFiles = [
     "/assets/sound1.mp3",
     "/assets/sound2.mp3",
@@ -24,7 +21,6 @@ const Home = () => {
         const randomIndex = Math.floor(Math.random() * soundFiles.length);
         const audio = new Audio(soundFiles[randomIndex]);
 
-        // Attempt to play the sound and handle autoplay block
         audio.play().catch((error) => {
             console.log("Autoplay blocked, waiting for user interaction:", error);
             document.addEventListener("click", () => {
