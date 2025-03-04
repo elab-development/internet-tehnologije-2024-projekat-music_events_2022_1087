@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
-import useImages from "../hooks/useImages"; // Fetches an image related to the event
+import { useParams, useNavigate } from "react-router-dom";
+import useImages from "../hooks/useImages";
+import MapComponent from "../components/MapComponent"; // 🔥 Import the Map Component
 import "../App.css";
 
 const EventInfo = () => {
     const { id } = useParams();
-    const navigate = useNavigate(); // ✅ For "Go Back" button
+    const navigate = useNavigate();
     const [event, setEvent] = useState(null);
-    const { images, loading: imageLoading, error: imageError } = useImages(event?.title, 1); // Fetch 1 image
+    const { images, loading: imageLoading, error: imageError } = useImages(event?.title, 1);
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/events/${id}`)
             .then((res) => res.json())
-            .then((data) => {
-                console.log("Fetched event data:", data);
-                setEvent(data.data);
-            })
+            .then((data) => setEvent(data.data))
             .catch((err) => console.error("Error fetching event:", err));
     }, [id]);
 
@@ -42,6 +40,14 @@ const EventInfo = () => {
                 <p><strong>Price:</strong> ${event.price}</p>
                 <p><strong>Type:</strong> {event.type}</p>
             </div>
+
+            {/* 🔥 Add Map Component Here - Passing Event Data */}
+            <MapComponent
+                locationName={event.location}
+                eventTitle={event.title}
+                performer={event.performer}
+                price={event.price}
+            />
 
             {/* ✅ Buttons Section */}
             <div className="button-group">
