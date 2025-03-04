@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Navigation from "./components/Navigation";
 import Logo from "./components/Logo";
+import Events from "./components/Events";
+import EventInfo from "./components/EventInfo";
 import "./App.css";
 
 const App = () => {
@@ -13,8 +15,8 @@ const App = () => {
             <Logo />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/events" element={<h1>Events Page</h1>} />
-                    <Route path="/plans" element={<h1>Subscription Plans</h1>} />
+                    <Route path="/events" element={<Events />} />
+                    <Route path="/events/:id" element={<EventInfo />} />
                 </Routes>
             </div>
         </Router>
