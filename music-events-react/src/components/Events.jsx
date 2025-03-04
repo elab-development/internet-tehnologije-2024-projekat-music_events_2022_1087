@@ -9,7 +9,7 @@ const Events = () => {
     const [typeFilter, setTypeFilter] = useState("");
     const [sortBy, setSortBy] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 9; // Now displays in a 3x3 grid
+    const itemsPerPage = 6; // Now displays in a 3x3 grid
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -75,7 +75,7 @@ const Events = () => {
                     <button className="pagination-btn" onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
                         Prev
                     </button>
-                    <span>Page {currentPage} of {totalPages}</span>
+                    <span style={{color:"black", fontWeight:"bold"}}>Page {currentPage} of {totalPages}</span>
                     <button className="pagination-btn" onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
                         Next
                     </button>
