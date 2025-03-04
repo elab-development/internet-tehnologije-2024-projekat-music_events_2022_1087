@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import Logo from "./components/Logo";
 import Events from "./components/Events";
 import EventInfo from "./components/EventInfo";
+import Footer from "./components/Footer";
 import "./App.css";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/events" element={<Events />} />
                     <Route path="/events/:id" element={<EventInfo />} />
                 </Routes>
+                <Footer />
             </div>
         </Router>
     );
