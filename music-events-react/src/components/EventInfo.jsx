@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useImages from "../hooks/useImages";
 import MapComponent from "../components/MapComponent"; 
 import "../App.css";
+import { Link } from "react-router-dom"; 
 
 const EventInfo = () => {
     const { id } = useParams();
@@ -21,6 +22,9 @@ const EventInfo = () => {
 
     return (
         <div className="event-info-container">
+            <div style={{marginBottom:"20px"}}>
+                <Link style={{color:"black"}} to="/">Home</Link> &gt; <Link style={{color:"black"}} to="/events">Events</Link> &gt; <span>Event Info</span>
+            </div>
             {imageLoading ? (
                 <p className="loading-text">Loading image...</p>
             ) : imageError || !images.length ? (

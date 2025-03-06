@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import "../App.css";
+import { Link } from "react-router-dom"; 
 
 const Events = () => {
     const [events, setEvents] = useState([]);
@@ -42,6 +43,10 @@ const Events = () => {
     return (
         <div className="events-container">
             <h1 className="main-title">EVENTS</h1>
+
+            <div style={{marginBottom:"20px"}}>
+                <Link style={{color:"white"}} to="/">Home</Link> &gt; <span>Events</span>
+            </div>
 
             <div className="controls">
                 <input type="text" placeholder="Search events..." onChange={(e) => setSearch(e.target.value)} />

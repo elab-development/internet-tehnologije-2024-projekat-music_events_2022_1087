@@ -2,6 +2,7 @@ import React from "react";
 import { FaTicketAlt, FaStar, FaCrown, FaGem } from "react-icons/fa";
 import CardSubPlans from "./CardSubPlans"; 
 import "../App.css";
+import { Link } from "react-router-dom"; 
 
 const plans = [
     {
@@ -34,6 +35,9 @@ const SubscriptionPlan = () => {
     return (
         <div className="subscription-container">
             <h1 className="subscription-title">Choose Your Plan</h1>
+            <div style={{marginBottom:"20px"}}>
+                <Link style={{color:"white"}} to="/">Home</Link> &gt; <span>Subscription Plans</span>
+            </div>
             <div className="subscription-row">
                 {plans.map((plan, index) => (
                     <CardSubPlans key={index} plan={plan} />
