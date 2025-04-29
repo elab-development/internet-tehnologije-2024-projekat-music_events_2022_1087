@@ -1,0 +1,699 @@
+/* src/App.css */
+
+/* Root Variables */
+:root {
+  --primary-bg: #000;
+  --primary-text: #fff;
+  --secondary-text: #bbb;
+  --hover-scale: 1.08;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-blur: 8px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  text-align: center;
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Title */
+.main-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 600px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Modern Image Card */
+.image-container {
+  width: 260px;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0px 8px 12px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.image-container:hover {
+  transform: scale(var(--hover-scale));
+}
+
+.image-container:hover img {
+  filter: brightness(1.2);
+}
+
+/* Top Left Navigation (Vertical) */
+.side-nav {
+  position: fixed;
+  top: 20px; /* Moves it down slightly from the top */
+  left: 20px; /* Moves it slightly from the left */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Navigation Icons */
+.nav-icon {
+  font-size: 1.8rem; /* Ensure proper size */
+  color: black;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  padding: 12px;
+  border-radius: 50%;
+}
+
+/* Unique Hover Effect */
+.nav-icon:hover {
+  transform: scale(1.2) rotate(10deg);
+  filter: brightness(0.7);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Logo in Top Right Corner */
+.logo-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Set a fixed square size */
+  height: 60px;
+  z-index: 1000;
+}
+
+/* Logo Image */
+.logo-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Lottie Animation Styling */
+.lottie-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  pointer-events: none; /* Ensure animation does not block hover */
+}
+
+/* 🎵 Events Page Styling */
+.events-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-y: auto; /* Scrollable page */
+  min-height: 100vh;
+}
+
+/* 🎟️ Controls (Search, Filter, Sort) */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.controls input,
+.controls select,
+.controls button {
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.controls button {
+  background: black;
+  color: white;
+}
+
+.controls button:hover {
+  background: white;
+  color: black;
+}
+
+/* 🎭 Events List - 3x3 Grid */
+.events-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  max-width: 1000px;
+}
+
+/* 🎫 Event Cards */
+.event-card {
+  background: white;
+  color: black;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 🎤 Event Title */
+.event-card h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* 🕰 Event Details */
+.event-card p {
+  font-size: 1rem;
+  color: #333;
+  margin: 4px 0;
+}
+
+/* 🔘 Show More Button */
+.event-card .show-more-btn {
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid black;
+}
+
+.event-card .show-more-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* ⏩ Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* ⏩ Pagination Box */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-box {
+  background: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pagination button {
+  background: black;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background: white;
+  color: black;
+}
+
+.pagination span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+}
+
+/* 🔘 Pagination Buttons */
+.pagination-btn{
+  background: black !important;
+  color: white !important;
+  font-size: 1rem !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease-in-out !important;
+  cursor: pointer !important;
+  border: 2px solid black;
+  font-weight: bold;
+}
+
+.pagination-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* 🔳 Disabled Button */
+.pagination-btn:disabled {
+  background: gray;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.event-info-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  color: black;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.event-info-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.event-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.event-description {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.event-details {
+  font-size: 1.1rem;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.event-details p {
+  margin: 8px 0;
+  font-weight: 500;
+  color: #333;
+}
+
+.event-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.book-now-btn, .go-back-btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.book-now-btn {
+  background: black;
+  color: white;
+}
+
+.book-now-btn:hover {
+  background: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.go-back-btn {
+  background: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.go-back-btn:hover {
+  background: black;
+  color: white;
+}
+
+.map-container {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-container {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-map {
+  width: 100%;
+  height: 100%;
+}
+
+.popup-container {
+  text-align: center;
+  font-size: 14px;
+  max-width: 200px;
+}
+
+.popup-image {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+.popup-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+/* Footer */
+.footer {
+  background: var(--primary-text);;
+  color: var(--primary-bg);
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 1rem;
+  border-top: 2px solid #222;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-img {
+  width: 45px;
+  height: 60px;
+}
+
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.trademark-icon {
+  font-size: 0.8rem;
+  color: var(--primary-bg);
+}
+
+.footer-links p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.footer-icon {
+  color:var(--primary-bg);
+  font-size: 1.2rem;
+}
+
+.footer-links a {
+  color:var(--primary-bg);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+  color: var(--primary-bg);
+}
+
+.footer-bottom {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Subscription Section */
+.subscription-container {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Title */
+.subscription-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: white;
+}
+
+/* Flexbox Layout for One Row */
+.subscription-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap; /* Ensures all cards stay in one row */
+  overflow-x: auto; /* Enables horizontal scrolling if needed */
+  padding-bottom: 10px;
+}
+
+/* Card Styling */
+.card-sub {
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  min-width: 250px; /* Ensure each card fits properly */
+  max-width: 280px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-sub:hover {
+  transform: scale(1.05);
+}
+
+/* Card Icon */
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: black;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Card Price */
+.card-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Features List */
+.card-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.card-features li {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/* Subscribe Button */
+.subscribe-btn {
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background: #444;
+}
+
+/* Custom Scrollbar for Modern Aesthetic */
+::-webkit-scrollbar {
+  width: 10px; /* Scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: black; /* Black track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white; /* White scrollbar */
+  border-radius: 10px;
+  border: 2px solid black; /* Black border around scrollbar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8); /* Slight transparency on hover */
+}
+
+.ad-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  text-align: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.ad-popup img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
