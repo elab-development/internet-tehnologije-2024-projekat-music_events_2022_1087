@@ -782,3 +782,15 @@ body {
 .chart-h-380 { height: 380px; }
 .chart-h-460 { height: 460px; }
 
+/* header row inside white surface */
+.analytics-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.analytics-toolbar {
+  display: flex;
+  gap: 10px;
+}

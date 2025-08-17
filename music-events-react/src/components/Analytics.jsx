@@ -1,4 +1,4 @@
-// src/components/Analytics.jsx  (or src/pages/Analytics.jsx)
+// src/components/Analytics.jsx  (ili src/pages/Analytics.jsx)
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -23,6 +23,10 @@ const Analytics = () => {
   const [summary, setSummary] = useState(null);
   const [perEvent, setPerEvent] = useState([]);
   const [last30, setLast30] = useState([]);
+
+  // export state
+  const [downloading, setDownloading] = useState(false);
+  const [dlErr, setDlErr] = useState("");
 
   useEffect(() => {
     if (!isManager) {
@@ -54,18 +58,74 @@ const Analytics = () => {
     run();
   }, [isManager, navigate, token]);
 
+  const exportExcel = async () => {
+    setDlErr("");
+    try {
+      setDownloading(true);
+      const res = await fetch(`${API_BASE}/bookings/export`, {
+        method: "GET",
+        headers: {
+          Accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        let msg = "Export failed.";
+        try { const j = await res.json(); msg = j.message || JSON.stringify(j); } catch {}
+        throw new Error(msg);
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "bookings.xlsx";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (e) {
+      setDlErr(e.message || "Something went wrong.");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   if (!isManager) return null;
 
   return (
     <div className="analytics-wrap">
-      {/* WHITE SURFACE */}
       <div className="analytics-surface">
         <div className="analytics-breadcrumb" style={{ color: "black" }}>
           <Link style={{ color: "black" }} to="/home">Home</Link> &gt; <span>Analytics</span>
         </div>
 
-        <h1 className="main-title analytics-title">ANALYTICS</h1>
+        <div className="analytics-header">
+          <h1 className="main-title analytics-title">ANALYTICS</h1>
+          <div className="analytics-toolbar">
+          <button
+            onClick={exportExcel}
+            disabled={downloading}
+            title="Download all bookings as Excel"
+            style={{
+              background: "#000",
+              color: "#fff",
+              border: "1px solid #000",
+              borderRadius: 8,
+              padding: "10px 16px",
+              fontWeight: 700,
+              minWidth: 180,
+              boxShadow: "0 2px 0 #000",
+              cursor: downloading ? "not-allowed" : "pointer",
+              opacity: downloading ? 0.6 : 1,
+              transition: "transform .05s ease-in-out",
+            }}
+          >
+            {downloading ? "Exporting…" : "Export to Excel"}
+          </button>
+          </div>
+        </div>
 
+        {dlErr && <div className="analytics-alert">{dlErr}</div>}
         {err && <div className="analytics-alert">{err}</div>}
 
         {loading ? (
