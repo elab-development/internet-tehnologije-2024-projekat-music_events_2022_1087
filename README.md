@@ -4,7 +4,7 @@
 
 **Echo** je full-stack web aplikacija (Frontend: **React**, Backend: **Laravel**) za pregled, upravljanje i rezervaciju muzičkih događaja (koncerti, festivali, opera…), sa ocenama/recenzijama kupaca, analitikom i izvozom rezervacija u **Excel**. Aplikacija podržava korisničke i menadžerske uloge.
 
----
+----
 
 ## Karakteristike
 
