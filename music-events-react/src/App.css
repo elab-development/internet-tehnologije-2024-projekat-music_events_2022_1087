@@ -697,3 +697,10 @@ body {
   }
 }
 
+/* optional */
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
