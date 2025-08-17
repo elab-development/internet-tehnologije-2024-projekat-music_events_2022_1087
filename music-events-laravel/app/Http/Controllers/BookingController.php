@@ -7,6 +7,8 @@ use App\Http\Resources\BookingResource;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Event;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -103,6 +105,60 @@ class BookingController extends Controller
         }
         // Generisanje excel fajla
         return \Maatwebsite\Excel\Facades\Excel::download(new BookingExport, 'bookings.xlsx');
+    }
+
+    public function stats(Request $request)
+    {
+        // mora biti prijavljen i menadžer
+        if (!auth()->check() || !auth()->user()->is_manager) {
+            return response()->json(['error' => 'Unauthorized. Managers only.'], 403);
+        }
+
+        // Osnovni agregati
+        $summary = [
+            'total_bookings'           => (int) Booking::count(),
+            'tickets_sold'             => (int) Booking::sum('number_of_tickets'),
+            'total_revenue'            => (int) Booking::sum('total_price'),
+            'avg_tickets_per_booking'  => round((float) Booking::avg('number_of_tickets'), 2),
+        ];
+
+        // Grupisano po događaju
+        $perEvent = Booking::selectRaw('event_id, COUNT(*) as bookings, SUM(number_of_tickets) as tickets, SUM(total_price) as revenue')
+            ->groupBy('event_id')
+            ->with(['event:id,title'])
+            ->get()
+            ->map(function ($r) {
+                return [
+                    'event_id'    => (int) $r->event_id,
+                    'event_title' => $r->event->title ?? ('#' . $r->event_id),
+                    'bookings'    => (int) $r->bookings,
+                    'tickets'     => (int) $r->tickets,
+                    'revenue'     => (int) $r->revenue,
+                ];
+            })
+            ->values();
+
+        // Poslednjih 30 dana – dnevni promet & broj rezervacija
+        $since = Carbon::today()->subDays(30);
+        $last30 = Booking::selectRaw('DATE(created_at) as day, COUNT(*) as bookings, SUM(total_price) as revenue')
+            ->where('created_at', '>=', $since)
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->map(function ($r) {
+                return [
+                    'day'      => (string) $r->day,
+                    'bookings' => (int) $r->bookings,
+                    'revenue'  => (int) $r->revenue,
+                ];
+            });
+
+        return response()->json([
+            'message'        => 'Booking stats retrieved.',
+            'summary'        => $summary,
+            'per_event'      => $perEvent,
+            'last_30_days'   => $last30,
+        ]);
     }
 
 }
