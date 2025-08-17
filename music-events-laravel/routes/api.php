@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/events/{event}/reviews', [ReviewController::class, 'forEvent']);
 
     Route::get('/bookings/export', [BookingController::class, 'export']);
+    Route::get('/bookings/stats', [BookingController::class, 'stats']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

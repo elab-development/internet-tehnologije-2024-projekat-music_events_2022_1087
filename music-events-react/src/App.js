@@ -11,6 +11,7 @@ import AdPopup from "./components/AdPopup";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Reservations from "./components/Reservations";
+import Analytics from "./components/Analytics";
 import "./App.css";
 
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reservations" element={<Reservations />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
         {hasUser && <Footer />}
       </div>
