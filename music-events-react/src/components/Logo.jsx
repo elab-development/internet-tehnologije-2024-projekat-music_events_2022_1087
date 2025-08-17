@@ -4,7 +4,7 @@ import "../App.css";
 
 const Logo = () => {
     return (
-        <Link to="/" className="logo-container">
+        <Link to="/home" className="logo-container">
             <img src="/assets/logo.png" alt="Echo Logo" className="logo-image" />
         </Link>
     );

@@ -16,26 +16,28 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:6',
+            'name'        => 'required|string|max:255',
+            'email'       => 'required|string|email:rfc,dns|unique:users,email',
+            'password'    => 'required|string|min:6|confirmed', // expects password_confirmation
+            'is_manager'  => 'nullable|boolean',                 // accepts "0"/"1", 0/1, true/false
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'name'       => $validated['name'],
+            'email'      => $validated['email'],
+            'password'   => Hash::make($validated['password']),
+            // store as 0/1; default to 0 if not provided
+            'is_manager' => array_key_exists('is_manager', $validated)
+                            ? (int) $request->boolean('is_manager')
+                            : 0,
         ]);
 
-       // Generisanje tokena
-       $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-       // Vraćanje odgovora u JSON formatu
-       return response()->json([
-           'user' => $user,
-           'token' => $token,
-       ], 201); // Statusni kod 201 (Created)
-        
+        return response()->json([
+            'user'  => $user,
+            'token' => $token,
+        ], 201);
     }
 
 
