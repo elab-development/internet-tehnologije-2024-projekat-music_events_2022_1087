@@ -10,22 +10,24 @@ use App\Models\Event;
 
 class BookingController extends Controller
 {
-    public function index()
-{
-    // Provera da li je korisnik admin
-    if (!auth()->user() || !auth()->user()->is_manager) {
-        return response()->json(['error' => 'Unauthorized. Only managers can view all bookings.'], 403);
+    public function index(Request $request)
+    {
+        // Must be logged in
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        // Return ONLY this user's bookings (buyer = user_id)
+        $bookings = Booking::with('event')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
+
+        return response()->json([
+            'message'  => 'Your bookings retrieved successfully!',
+            'bookings' => BookingResource::collection($bookings),
+        ]);
     }
-
-   // Dohvati sve rezervacije sa relacijama (korisnik i događaj)
-   $bookings = Booking::with(['user', 'event'])->paginate(10);
-
-    return response()->json([
-        'message' => 'All bookings retrieved successfully!',
-        'bookings' => BookingResource::collection($bookings),
-    ]);
-}
-
    
     public function store(Request $request)
     {

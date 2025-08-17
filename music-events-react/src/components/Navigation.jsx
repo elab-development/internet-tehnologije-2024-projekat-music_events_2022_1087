@@ -1,12 +1,13 @@
 import React from "react";
 import { FaHome, FaMusic, FaRegCreditCard } from "react-icons/fa";
+import { GrTicket } from "react-icons/gr";
 import { Tooltip } from "react-tooltip";
 import "../App.css"; 
 
 const Navigation = () => {
     return (
         <nav className="side-nav">
-            <a href="/" data-tooltip-id="home-tooltip">
+            <a href="/home" data-tooltip-id="home-tooltip">
                 <FaHome className="nav-icon" />
             </a>
             <Tooltip id="home-tooltip" place="right" content="Home" />
@@ -20,6 +21,11 @@ const Navigation = () => {
                 <FaRegCreditCard className="nav-icon" />
             </a>
             <Tooltip id="plans-tooltip" place="right" content="Subscription Plans" />
+
+            <a href="/reservations" data-tooltip-id="bookings-tooltip">
+                <GrTicket className="nav-icon" />
+            </a>
+            <Tooltip id="bookings-tooltip" place="right" content="Bookings" />
         </nav>
     );
 };

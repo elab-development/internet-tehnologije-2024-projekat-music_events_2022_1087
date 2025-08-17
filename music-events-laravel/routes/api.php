@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('bookings', BookingController::class)->only(['index','store', 'update', 'destroy']);
 
     Route::post('/bookings/{bookingId}/reviews', [ReviewController::class, 'store']);
+    Route::get('/events/{event}/reviews', [ReviewController::class, 'forEvent']);
 
     Route::get('/bookings/export', [BookingController::class, 'export']);
 
